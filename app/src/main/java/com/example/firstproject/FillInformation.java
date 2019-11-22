@@ -2,6 +2,7 @@ package com.example.firstproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.firstproject.com.example.firstproject.users.Student;
 import com.example.firstproject.com.example.firstproject.users.Teacher;
 import com.example.firstproject.com.example.firstproject.users.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,7 +25,6 @@ public class FillInformation extends AppCompatActivity implements View.OnClickLi
     private EditText age;
     private EditText city;
     private Button saveInfo;
-
     private RadioGroup radioUserGroup;
     private RadioButton radioUserButton;
 
@@ -31,11 +32,16 @@ public class FillInformation extends AppCompatActivity implements View.OnClickLi
     private String chosenUser = "students"; //when save the user
 
     private DatabaseReference myRef;
+    private FirebaseAuth firebaseAuth;
+    private String currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_information);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentId = firebaseAuth.getCurrentUser().getUid();
 
         firstName = findViewById(R.id.fillFirstName);
         lastName = findViewById(R.id.fillLastName);
@@ -75,6 +81,9 @@ public class FillInformation extends AppCompatActivity implements View.OnClickLi
         user.setCity(city.getText().toString().trim());
 
 //        myRef.child(chosenUser).push().setValue(user);
-        myRef.child(chosenUser).push().setValue(user);
+        myRef.child(chosenUser).child(currentId).setValue(user);
+
+        finish();
+        startActivity(new Intent(this, MyPage.class));
     }
 }

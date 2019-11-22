@@ -32,13 +32,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(firebaseAuth.getCurrentUser() != null){
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
+
         firebaseAuth = FirebaseAuth.getInstance();
 
-
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(getApplicationContext(), MyPage.class));
+        }
 
         progressDialog = new ProgressDialog(this);
         loginButton = findViewById(R.id.loginButton);
@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
                             finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), MyPage.class));
                         }
                     }
                 });

@@ -37,11 +37,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null){
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-
         progressDialog = new ProgressDialog(this);
         registerButton = findViewById(R.id.registerButton);
         inputEmail = findViewById(R.id.registrationInputEmail);
@@ -49,6 +44,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
         toLogin = findViewById(R.id.toLogin);
 
+
+        //
         registerButton.setOnClickListener(this);
         toLogin.setOnClickListener(this);
     }
@@ -60,6 +57,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         }
 
         if (view == toLogin) {
+            Toast.makeText(this, "TO LOGIN", Toast.LENGTH_SHORT).show();
             changeActivityToLogin();
         }
     }
